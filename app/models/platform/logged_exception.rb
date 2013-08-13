@@ -272,7 +272,7 @@ class Platform::LoggedException < ActiveRecord::Base
 
   private
 
-    BACKTRACE_REGEX = /^#{Regexp.escape(Rails.root)}/
+    BACKTRACE_REGEX = /^#{Regexp.escape(Rails.root.to_s)}/
     def sanitize_backtrace(trace)
       trace.map{|line| Pathname.new(line.gsub(BACKTRACE_REGEX, "[RAILS_ROOT]")).cleanpath.to_s}
     end
