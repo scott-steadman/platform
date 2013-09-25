@@ -24,3 +24,5 @@
 module Platform
 
 end
+
+ActionController::Base.append_view_path File.dirname(__FILE__) + '/../app/views/platform'
