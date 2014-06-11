@@ -115,9 +115,11 @@ module PlatformHelper
   
   def platform_user_tag(user, options = {})
     return "Deleted Translator" unless user
-    
-    if options[:linked]
-      link_to(Platform::Config.user_name(user), Platform::Config.user_link(user))
+
+    link = Platform::Config.user_link(user) if options[:linked]
+
+    if link
+      link_to(Platform::Config.user_name(user), link)
     else
       Platform::Config.user_name(user)
     end
@@ -131,9 +133,11 @@ module PlatformHelper
     end
     
     img_tag = "<img src='#{img_url}' style='width:48px'>"
-    
-    if user and options[:linked]
-      link_to(img_tag, Platform::Config.user_link(user))
+
+    link = Platform::Config.user_link(user) if options[:linked]
+
+    if user and link
+      link_to(img_tag, link)
     else  
       img_tag
     end
