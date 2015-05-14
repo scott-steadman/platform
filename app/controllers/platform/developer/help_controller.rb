@@ -102,6 +102,8 @@ class Platform::Developer::HelpController < Platform::Developer::BaseController
       return redirect_to(:action => :index, :version => @version)
     end
     
+    parts << @api[:default_action] if parts.size == 1 and @api[:default_action]
+
     if parts.size > 1 
       if @api[:actions] and @api[:actions][parts.last]
         action_api = @api[:actions][parts.last]

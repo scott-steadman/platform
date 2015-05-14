@@ -88,6 +88,7 @@
 		<% if api[:actions] %>
 		 <div id="<%=api_key%>_api_actions" style="margin-bottom:5px;<%='display:none' unless expanded%>"> 
 		 <% api[:actions].keys.sort.each do |api_action_key| %>
+		    <% next if api_action_key == api[:default_action] %>
 		    <% api_action = api[:actions][api_action_key] %>
 		    <div style="padding-left:25px;" class="section_link <%="selected" if @api[:path]==api_action[:path] %>">
 				    <%=link_to(api_action_key, {:action => :api, :path => api_action[:path], :version => @version})%>

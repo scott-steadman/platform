@@ -40,6 +40,7 @@
 
         if selected_keys.is_a?(Array)
 	        selected_keys.each do |field_key|
+	          raise("Cannot find #{field_key} in root fields!") if root[:fields][field_key].nil?
 	          api_params[field_key] = root[:fields][field_key].clone
 	          api_params[field_key][:required] = false
 	        end
