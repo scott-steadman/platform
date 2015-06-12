@@ -334,7 +334,7 @@ private
     else
       access_token = client_application.create_client_token(refresh_token.scope)
     end    
-    refresh_token.destroy  
+    refresh_token.invalidate!
 
     refresh_token = client_application.create_refresh_token(access_token.user, access_token.scope)
     render_response(:access_token => access_token.token, :refresh_token => refresh_token.token, :expires_in => (access_token.valid_to.to_i - Time.now.to_i))

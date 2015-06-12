@@ -243,13 +243,11 @@ class Platform::Application < ActiveRecord::Base
   def invalidate_all_access_tokens(user)
     tokens = Platform::Oauth::AccessToken.find(:all, :conditions => ["application_id = ? and user_id = ?", self.id, user.id])
     tokens.each do |token|
-      token.destroy
+      token.invalidate!
     end
   end
 
   def create_access_token(user, scope = 'basic', interval = Registry.api.token_lifetime)
-    invalidate_all_access_tokens(user)
-
     token = Platform::Oauth::AccessToken.new
     token.application = self
     token.user = user
