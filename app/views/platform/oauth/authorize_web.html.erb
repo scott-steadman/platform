@@ -21,7 +21,7 @@
   <div class="page_bd bd ">
 
 
-	<div class="mhm mvl outset" style="margin:50px auto;width:625px">
+	<div class="platform-authorize-outer outset">
 		<div class="inner">
     
 			<div class="module mbl">
@@ -33,27 +33,8 @@
 			
 			<div class="module pal mbl">
 				<div class="line">
-					<div class="unit size_3of5">
-						<div class="media mrl">
-							<%=image_tag(Platform::Config.user_mugshot(Platform::Config.current_user), :class => "img")%>
-							<div class="bd">
-								<h4><%= trl("This application will have access to:") %></h4>
-								<p class="quiet mbl">
-									<%=trl("Your name, profile picture, gender, family, photos and any other information available through your user account.")%>
-								</p>
-								<div>
-								 <button class="blue super large button" onClick="$('authorize').value = 1; $('auth_form').submit()">
-										<%=trl('Authorize', 'Client application action label')%>
-								 </button>
-								 <button class="white super large button"  onClick="$('authorize').value = 0; $('auth_form').submit()"">
-										<%=trl("Cancel", 'Client application action label')%>
-								 </button>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="unit size_2of5 last_unit">
-						<div class="mll pll" style="border-left:solid 1px #ddd">
+					<div class="platform-authorize__app-info-panel">
+						<div class="platform-authorize__app-info-panel-inner">
 							<div class="mbm">
 								<%= image_tag(@client_application.logo_url) %>
 							</div>
@@ -63,6 +44,25 @@
 							<div>
 							 <%= platform_app_rank_tag(@client_application, 95) %>
 							</div>				
+						</div>
+					</div>
+					<div class="platform-authorize__access-panel">
+						<div class="media mrl">
+							<%=image_tag(Platform::Config.user_mugshot(Platform::Config.current_user), :class => "img")%>
+							<div class="bd">
+								<h4><%= trl("This application will have access to:") %></h4>
+								<p class="quiet mbl">
+									<%=trl("Your name, profile picture, gender, family, photos and any other information available through your user account.")%>
+								</p>
+								<div class='platform-authorize__button-row'>
+								 <button class="blue super large button" onClick="$('authorize').value = 1; $('auth_form').submit()">
+										<%=trl('Authorize', 'Client application action label')%>
+								 </button>
+								 <button class="white super large button"  onClick="$('authorize').value = 0; $('auth_form').submit()">
+										<%=trl("Cancel", 'Client application action label')%>
+								 </button>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -93,4 +93,3 @@
 
 </body>
 </html>
-
