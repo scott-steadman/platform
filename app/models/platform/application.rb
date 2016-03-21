@@ -303,7 +303,7 @@ class Platform::Application < ActiveRecord::Base
 
   # deprecated
   def self.permissions
-    [:no_rate_limit, :grant_type_password, :unlimited_models, :add_without_premium, :trusted]
+    [:no_rate_limit, :grant_type_password, :unlimited_models, :add_without_premium, :trusted, :tos_required]
   end
   
   def icon_url
