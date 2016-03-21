@@ -68,8 +68,18 @@
 	      </div>
 				  
 	      <div style="margin-top:10px; color: #888;">
-	        <%=tr("By proceeding, you agree to the {application} [link1: Terms of Service] and [link2: Privacy Policy].", "", :application => @client_application.name, :link1 => [@client_application.terms_of_service_url], :link2 => [@client_application.privacy_policy_url])%>
-				</div>
+          <%- if @client_application.tos_required? -%>
+            <input id='tos-accepted' type='checkbox'/>
+            <%=tr("I accept the {application} [link1: Terms of Service] and [link2: Privacy Policy].", "",
+                                    :application => @client_application.name,
+                                    :link1 => lambda{|text| link_to(text, @client_application.terms_of_service_url, :target => "_blank")},
+                                    :link2 => lambda{|text| link_to(text, @client_application.privacy_policy_url, :target => "_blank")})%>
+          <%- else -%>
+            <%=tr("By proceeding, you agree to the {application} [link1: Terms of Service] and [link2: Privacy Policy].", "",
+                                    :application => @client_application.name,
+                                    :link1 => lambda{|text| link_to(text, @client_application.terms_of_service_url, :target => "_blank")},
+                                    :link2 => lambda{|text| link_to(text, @client_application.privacy_policy_url, :target => "_blank")})%>
+          <%- end -%>
 			</div>
 			
 			<div style="background:#eee; text-align:left; padding:10px; vertical-align:middle; ">
@@ -78,7 +88,12 @@
 			  		<td style='text-align:left; vertical-align:middle;'>
 			  		</td>
 						<td style='text-align:right;'>
-			        <%= link_to_function(trl('Allow', 'Client application action label'), %Q{$('authorize').value = 1; $S('auth_form')}, :class=>'button super blue medium') %>
+			        <%- if @client_application.tos_required? -%>
+                <div class='platform-authorize__tos-row' style='display:none;'>
+                  <%= tr('You must approve the Terms of Service and Privacy Policy', 'Client application error text') %>
+                </div>
+              <%- end -%>
+			        <%= link_to_function(trl('Allow', 'Client application action label'), %Q{$('authorize').value = 1; doAccept()}, :class=>'button super blue medium') %>
 			        <%= link_to_function(trl("Don't Allow", 'Client application action label'), %Q{$('authorize').value = 0; $S('auth_form')}, :class=>'button super blue medium') %>
 						</td>
 			  	</tr>
@@ -97,6 +112,17 @@
   function $S(element_id) {
     $(element_id).submit();   
   } 
+
+  function doAccept() {
+    if( !$('tos-accepted').checked ) {
+      $$('.platform-authorize__tos-row').first().show();
+      return false;
+    } else {
+      $('auth_form').submit();
+    }
+  }
+
+
 </script>  
 
 </body>

@@ -207,6 +207,19 @@ class Platform::Application < ActiveRecord::Base
     has_permission?(:add_without_premium)
   end
 
+  def tos_required(value=true)
+    set_permission(:tos_required, value)
+  end
+
+  def tos_required!(value=true)
+    tos_required(value)
+    save!
+  end
+
+  def tos_required?
+    has_permission?(:tos_required)
+  end
+
   def create_request_token(user, callback_url, scope = 'basic', interval = 10.minutes)
     token = Platform::Oauth::RequestToken.new
     token.application = self

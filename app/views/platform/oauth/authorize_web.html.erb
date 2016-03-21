@@ -54,8 +54,13 @@
 								<p class="quiet mbl">
 									<%=trl("Your name, profile picture, gender, family, photos and any other information available through your user account.")%>
 								</p>
+              <%- if @client_application.tos_required? -%>
+                <div class='platform-authorize__tos-row' style='display:none;'>
+                  <%= tr('You must approve the Terms of Service and Privacy Policy', 'Client application error text') %>
+                </div>
+              <%- end -%>
 								<div class='platform-authorize__button-row'>
-								 <button class="blue super large button" onClick="$('authorize').value = 1; $('auth_form').submit()">
+								 <button class="blue super large button" onClick="$('authorize').value = 1; doAccept()">
 										<%=trl('Authorize', 'Client application action label')%>
 								 </button>
 								 <button class="white super large button"  onClick="$('authorize').value = 0; $('auth_form').submit()">
@@ -69,9 +74,20 @@
 			</div>
 				
 			<div class="module small quiet prose">
-				<%=tr("By proceeding, you agree to the {application} [link1: Terms of Service] and [link2: Privacy Policy].", "", :application => @client_application.name, :link1 => [@client_application.terms_of_service_url], :link2 => [@client_application.privacy_policy_url])%>
+      <%- if @client_application.tos_required? -%>
+        <input id='tos-accepted' type='checkbox'/>
+        <%=tr("I accept the {application} [link1: Terms of Service] and [link2: Privacy Policy].", "",
+                                :application => @client_application.name,
+                                :link1 => lambda{|text| link_to(text, @client_application.terms_of_service_url, :target => "_blank")},
+                                :link2 => lambda{|text| link_to(text, @client_application.privacy_policy_url, :target => "_blank")})%>
+      <%- else -%>
+        <%=tr("By proceeding, you agree to the {application} [link1: Terms of Service] and [link2: Privacy Policy].", "",
+                                :application => @client_application.name,
+                                :link1 => lambda{|text| link_to(text, @client_application.terms_of_service_url, :target => "_blank")},
+                                :link2 => lambda{|text| link_to(text, @client_application.privacy_policy_url, :target => "_blank")})%>
+      <%- end -%>
 			</div>
-							
+
 		</div>
 	</div>
 
@@ -86,6 +102,15 @@
     return element_id;
   }
 	
+  function doAccept() {
+    if( !$('tos-accepted').checked ) {
+      $$('.platform-authorize__tos-row').first().show();
+      return false;
+    } else {
+      $('auth_form').submit();
+    }
+  }
+
 </script>  
 
   </div>
