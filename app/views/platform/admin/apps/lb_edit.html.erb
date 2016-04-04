@@ -82,6 +82,17 @@
           </tr>
           <tr>
               <th>
+                  Consent Label:
+              </th>
+              <td>
+                  <%= f.text_field :consent_label, :style=>"width:99%;", :label => @app.default_terms_statement_tr_label %><br />
+                  <div class='application-edit-form__consent-label-instructions'>
+                    Usable tokens: <b>{application}</b> (name), <b>{link_tos}</b>, <b>{link_privacy}</b>
+                  </div>
+              </td>
+          </tr>
+          <tr>
+              <th>
                   Canvas Name:
               </th>
               <td>

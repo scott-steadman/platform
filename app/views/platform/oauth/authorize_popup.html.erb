@@ -36,7 +36,7 @@
 							 <button class="blue super large button" onClick="$('authorize').value = 1; doAccept()">
 									<%=trl('Authorize', 'Client application action label')%>
 							 </button>
-							 <button class="white super large button"  onClick="$('authorize').value = 0; $('auth_form').submit()"">
+							 <button class="white super large button"  onClick="$('authorize').value = 0; $('auth_form').submit()">
 									<%=trl("Cancel", 'Client application action label')%>
 							 </button>
 							</div>
@@ -62,16 +62,11 @@
 		<div class="module small quiet prose">
       <%- if @client_application.tos_required? -%>
         <input id='tos-accepted' type='checkbox'/>
-        <%=tr("I accept the {application} [link1: Terms of Service] and [link2: Privacy Policy].", "",
-                                :application => @client_application.name,
-                                :link1 => lambda{|text| link_to(text, @client_application.terms_of_service_url, :target => "_blank")},
-                                :link2 => lambda{|text| link_to(text, @client_application.privacy_policy_url, :target => "_blank")})%>
-      <%- else -%>
-        <%=tr("By proceeding, you agree to the {application} [link1: Terms of Service] and [link2: Privacy Policy].", "",
-                                :application => @client_application.name,
-                                :link1 => lambda{|text| link_to(text, @client_application.terms_of_service_url, :target => "_blank")},
-                                :link2 => lambda{|text| link_to(text, @client_application.privacy_policy_url, :target => "_blank")})%>
       <%- end -%>
+      <%= tr(@client_application.terms_statement_tr_label, "",
+             :application  => @client_application.name,
+             :link_tos     => lambda{|text| link_to(text, @client_application.terms_of_service_url, :target => "_blank") },
+             :link_privacy => lambda{|text| link_to(text, @client_application.privacy_policy_url,   :target => "_blank") }) -%>
 		</div>
             
 	</div>

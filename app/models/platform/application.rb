@@ -220,6 +220,28 @@ class Platform::Application < ActiveRecord::Base
     has_permission?(:tos_required)
   end
 
+  def default_terms_statement_tr_label
+    links = []
+    links << "[link_tos: Terms of Service]"   unless terms_of_service_url.blank?
+    links << "[link_privacy: Privacy Policy]" unless privacy_policy_url.blank?
+
+    return '' if links.empty?
+
+    links = links.join(' and ')
+
+    if tos_required?
+      "I accept the {application} #{links}."
+    else
+      "By proceeding, you agree to the {application} #{links}."
+    end
+  end
+
+  def terms_statement_tr_label
+    result = self.consent_label
+    result = default_terms_statement_tr_label if result.nil? or result.blank?
+    result
+  end
+
   def create_request_token(user, callback_url, scope = 'basic', interval = 10.minutes)
     token = Platform::Oauth::RequestToken.new
     token.application = self
