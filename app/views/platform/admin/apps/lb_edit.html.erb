@@ -85,7 +85,7 @@
                   Consent Label:
               </th>
               <td>
-                  <%= f.text_field :consent_label, :style=>"width:99%;", :label => @app.default_terms_statement_tr_label %><br />
+                  <%= f.text_field :consent_label, :style=>"width:99%;" %><br />
                   <div class='application-edit-form__consent-label-instructions'>
                     Usable tokens: <b>{application}</b> (name), <b>{link_tos}</b>, <b>{link_privacy}</b>
                   </div>
@@ -122,3 +122,8 @@
         <%= render :partial => "/tr8n/admin/common/lightbox_buttons" %>
     </div>
 </div>
+
+<script type="text/javascript">
+  if (typeof LabelMaker == 'function')
+    new LabelMaker('app_consent_label', '<%= @app.default_terms_statement_tr_label.gsub(/'/, "\\\\'") -%>')
+</script>

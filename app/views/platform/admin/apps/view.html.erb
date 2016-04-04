@@ -100,10 +100,12 @@
         <td><%=@app.terms_of_service_url %></td>
     </tr>
     <tr>
-        <% consent_label = @app.consent_label %>
-        <% consent_label = nil if consent_label.to_s.blank? %>
         <th>Consent Label</th>
-        <td <%= "class='quiet'" if consent_label.nil?><%= consent_label || @app.default_terms_statement_tr_label %></td>
+        <% if @app.consent_label.to_s.blank? %>
+         <td class='quiet'><%= @app.default_terms_statement_tr_label %></td>
+        <% else %>
+          <td><%= @app.consent_label %></td>
+        <% end %>
     </tr>
     <tr>
         <th>Canvas Page Name</th>
