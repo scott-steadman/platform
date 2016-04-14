@@ -102,7 +102,7 @@
   }
 	
   function doAccept() {
-    if( !$('tos-accepted').checked ) {
+    if( $('tos-accepted') && !$('tos-accepted').checked ) {
       $$('.platform-authorize__tos-row').first().show();
       return false;
     } else {
