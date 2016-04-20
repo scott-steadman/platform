@@ -108,7 +108,7 @@ class Platform::AppsController < Platform::BaseController
       app_user = Platform::ApplicationUser.for(@app)
       
       unless app_user
-        @canvas_url = "http://#{Platform::Config.site_base_url}/platform/oauth/authorize?response_type=token&client_id=#{@app.key}&display=iframe&redirect_url=#{CGI.escape(@app.canvas_url)}"
+        @canvas_url = "//#{Platform::Config.site_base_url}/platform/oauth/authorize?response_type=token&client_id=#{@app.key}&display=iframe&redirect_url=#{CGI.escape(@app.canvas_url)}"
         return render(:action => :canvas_app)
       end
 
