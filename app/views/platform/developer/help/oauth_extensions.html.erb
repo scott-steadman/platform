@@ -10,6 +10,9 @@
     <p>
         <%=tr("This document provides you with steps for creating your own extension and embed it into the site.")%> 
     </p>
+    <p>
+	<%=tr("[link:Create and Manage Applications]", "", :link => lambda {|text| link_to(text, {}, {:target => '_blank', :class => 'platform-button'}) })%>
+    </p>
     <h3><%=tr("Embedded Application Example") %></h3>
     <p>
     	 <%=tr("Below is an example of a Photo Gallery extension that loads user's photo albums and displays them using an interactive layout.")%>
